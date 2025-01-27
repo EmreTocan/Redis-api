@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-api
+  namespace: redis
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis-api
+  template:
+    metadata:
+      labels:
+        app: redis-api
+    spec:
+      containers:
+        - name: redis-api
+          image: emretocan/redis-api:v6
+          ports:
+            - containerPort: 5000
+          env:
+          - name: REDIS_HOST
+            value: "redis-master.redis.svc.cluster.local"
+          - name: REDIS_PORT 
+            value: "6379"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: redis
+                key: redis-password 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-api-service
+  namespace: redis
+spec:
+  selector:
+    app: redis-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer

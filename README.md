@@ -5,3 +5,5 @@ Redise bağlanan bir api yazdım. Bu apiye redisde key ekleyip silecek endpointl
 Api clusterda her nodeda birer tane olacak şekilde deploy ettim ve ingress ile dışarıya açtım
 Kurduğum redis'in volume'ü awsde bir s3 hesaba backupladım
 Ve sildiğimde restore edilebilir olup olmadığını kontrol ettim. 
+
+Bunu hem DigitalOcean'da hem de kendi ana bilgisayarımda yaptım.
